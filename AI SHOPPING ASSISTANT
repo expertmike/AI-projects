@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Shopping Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #f2f2f2;
+        }
+
+        .app-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        select, button {
+            padding: 10px;
+            width: 80%;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .recommendations {
+            margin-top: 30px;
+        }
+
+        .product {
+            margin: 15px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: left;
+        }
+
+        .product h3 {
+            margin: 0;
+        }
+
+        .product p {
+            margin: 5px 0;
+        }
+
+        .product a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <h1>AI Shopping Assistant</h1>
+        <p>Select a category to get product recommendations:</p>
+        <select id="category">
+            <option value="">-- Select a Category --</option>
+            <option value="electronics">Electronics</option>
+            <option value="fashion">Fashion</option>
+            <option value="home">Home Appliances</option>
+            <option value="books">Books</option>
+        </select>
+        <button onclick="getRecommendations()">Get Recommendations</button>
+
+        <div class="recommendations" id="recommendations">
+            <!-- Recommendations will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        function getRecommendations() {
+            const category = document.getElementById('category').value;
+            const recommendationsDiv = document.getElementById('recommendations');
+            recommendationsDiv.innerHTML = '';
+
+            if (!category) {
+                alert('Please select a category.');
+                return;
+            }
+
+            // Rule-based product recommendations with links
+            const products = {
+                electronics: [
+                    { name: 'Smartphone', price: '$699', link: 'https://example.com/smartphone' },
+                    { name: 'Laptop', price: '$999', link: 'https://example.com/laptop' },
+                    { name: 'Wireless Headphones', price: '$199', link: 'https://example.com/headphones' }
+                ],
+                fashion: [
+                    { name: 'T-shirt', price: '$25', link: 'https://example.com/tshirt' },
+                    { name: 'Jeans', price: '$50', link: 'https://example.com/jeans' },
+                    { name: 'Sneakers', price: '$80', link: 'https://example.com/sneakers' }
+                ],
+                home: [
+                    { name: 'Air Fryer', price: '$120', link: 'https://example.com/airfryer' },
+                    { name: 'Vacuum Cleaner', price: '$150', link: 'https://example.com/vacuum' },
+                    { name: 'Blender', price: '$60', link: 'https://example.com/blender' }
+                ],
+                books: [
+                    { name: 'Fiction Novel', price: '$15', link: 'https://example.com/fiction' },
+                    { name: 'Science Book', price: '$20', link: 'https://example.com/science' },
+                    { name: 'Self-help Book', price: '$18', link: 'https://example.com/selfhelp' }
+                ]
+            };
+
+            const selectedProducts = products[category] || [];
+
+            if (selectedProducts.length === 0) {
+                recommendationsDiv.innerHTML = '<p>No products available for this category.</p>';
+            } else {
+                selectedProducts.forEach(product => {
+                    const productElement = document.createElement('div');
+                    productElement.className = 'product';
+                    productElement.innerHTML = `
+                        <h3>${product.name}</h3>
+                        <p>Price: ${product.price}</p>
+                        <a href="${product.link}" target="_blank">Buy Now</a>
+                    `;
+                    recommendationsDiv.appendChild(productElement);
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>
